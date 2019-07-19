@@ -1,0 +1,1 @@
+# flash calulation with variant components using deep learning
