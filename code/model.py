@@ -55,7 +55,7 @@ def simple_conv(inputs):
 	    activation=None, name='layer3')
 	output_1 = tf.nn.softmax(layer3_out[:,:, 0], axis=1)
 	output_2 = tf.nn.softmax(layer3_out[:,:, 1], axis=1)
-	return tf.concat([output_1, output_2], 1), layer5_out
+	return tf.concat([output_1, output_2], 1), layer3_out
 
 
 def test_graph(train_dir='logs'):
