@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 from parameter import *
 import tensorflow as tf
-from model import densenet, resnet, se_resnet
-from model import simple_conv, fc_net, convnet, attention
+from model import simple_conv, fc_net, attention
 from utils import *
 from tf_utils import *
 from tf_utils import config
@@ -24,14 +23,8 @@ def train_model(X, Y, testX, testY):
 	keep_prob = tf.placeholder(tf.float32)
 
 	# graph output
-	if model_name=='densenet':
-		y_logit, x_trans = densenet(xs, num_class, layers, growth, keep_prob, train_flag)
-	elif model_name=='resnet':
-		y_logit, x_trans = resnet(xs, num_class, blocks, keep_prob, train_flag)
-	elif model_name=='se_resnet':
-		y_logit, x_trans = se_resnet(xs, num_class, blocks, keep_prob, train_flag, ratio=se_ratio)
-	elif model_name=='simple_conv':
-		y_logit, x_trans = simple_conv(xs, num_class, keep_prob, train_flag)
+	if model_name=='simple_conv':
+		y_logit, x_trans = simple_conv(xs)
 	elif model_name=='fc':
 		y_logit, x_trans = fc_net(xs, num_class, keep_prob, train_flag)
 	elif model_name=='attention':
