@@ -23,7 +23,7 @@ def train_model(X, Y, testX, testY):
 	keep_prob = tf.placeholder(tf.float32)
 
 	# graph output
-	if model_name=='simple_conv':
+	if model_name=='conv':
 		y_logit, x_trans = simple_conv(xs)
 	elif model_name=='fc':
 		y_logit, x_trans = fc_net(xs, num_class, keep_prob, train_flag)

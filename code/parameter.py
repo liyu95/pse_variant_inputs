@@ -42,7 +42,7 @@ params related to se_resnet:
 	se_ratio: the squeeze ratio
 '''
 # model_name = args.model
-model_name = 'attention'
+model_name = 'conv'
 weight_decay = 0.0002
 
 
