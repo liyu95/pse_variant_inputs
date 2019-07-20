@@ -55,6 +55,7 @@ batch_size = 8192
 test_batch = 8192
 epoches = 200
 init_lr = 0.1
+lr_dict = {100: 0.01}
 keep_ratio = 0.8
 full_check = True
 less2more = True
