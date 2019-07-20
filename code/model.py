@@ -7,8 +7,8 @@ from attention_net import Encoder
 def attention(input_1, train_flag, mask):
 	regularizer = tf.contrib.layers.l2_regularizer(1.0)
 	with tf.variable_scope('attention_net', regularizer=regularizer):
-		sample_encoder = Encoder(num_layers=2, d_model=64, num_heads=8, 
-			dff=128, maxlen=14)
+		sample_encoder = Encoder(num_layers=2, d_model=64, num_heads=2, 
+			dff=256, maxlen=14)
 		# (batch_size, input_seq_len, 2), not normalized. Need softmax
 		feature_output = sample_encoder(input_1,
 			training=train_flag, mask=mask)

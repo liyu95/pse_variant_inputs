@@ -152,7 +152,7 @@ class EncoderLayer(tf.keras.layers.Layer):
 
 class Encoder(tf.keras.layers.Layer):
 	def __init__(self, num_layers, d_model, num_heads, dff, maxlen,
-		rate=0.1):
+		rate=0.2):
 		super(Encoder, self).__init__()
 
 		self.d_model = d_model

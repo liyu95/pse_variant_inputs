@@ -52,7 +52,7 @@ def train_model(X, Y, testX, testY):
 	loss = tf.add_n([mse] + regu_losses)
 
 	# define optimizer
-	# train_step = tf.train.MomentumOptimizer(lr, 0.9, use_nesterov=True).minimize(loss)
+	#train_step = tf.train.MomentumOptimizer(lr, 0.9, use_nesterov=True).minimize(loss)
 	train_step = tf.train.AdamOptimizer(lr).minimize(loss)
 
 	# define session

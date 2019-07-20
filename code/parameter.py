@@ -24,7 +24,7 @@ output_step: The frequency of output the training acc
 	on the screen
 '''
 # run_id = args.id
-run_id = 'fc_14_to_8'
+run_id = 'att_14_to_8'
 run_dir = run_id + '/'
 output_step = 10
 
@@ -42,7 +42,7 @@ params related to se_resnet:
 	se_ratio: the squeeze ratio
 '''
 # model_name = args.model
-model_name = 'fc'
+model_name = 'attention'
 weight_decay = 0.0002
 
 
