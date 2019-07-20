@@ -54,8 +54,8 @@ MCF_REG: whether use the MCF regularizer or not, it can be slow and
 batch_size = 8192
 test_batch = 8192
 epoches = 200
-init_lr = 0.1
-lr_dict = {100: 0.01}
+init_lr = 0.001
+lr_dict = {100: 0.0001}
 keep_ratio = 0.8
 full_check = True
 less2more = True
