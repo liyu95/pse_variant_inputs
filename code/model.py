@@ -4,13 +4,18 @@ import numpy as np
 from attention_net import Encoder
 
 
-def attention():
+def attention(input_1, train_flag, mask):
 	regularizer = tf.contrib.layers.l2_regularizer(1.0)
 	with tf.variable_scope('attention_net', regularizer=regularizer):
 		sample_encoder = Encoder(num_layers=2, d_model=64, num_heads=8, 
 			dff=128, maxlen=14)
-		self.feature_output = sample_encoder(self.input_x_vector,
-			training=self.train_flag, mask=self.mask)
+		# (batch_size, input_seq_len, 2), not normalized. Need softmax
+		feature_output = sample_encoder(input_1,
+			training=train_flag, mask=mask)
+		output_1 = tf.nn.softmax(feature_output[:,:, 0], axis=1)
+		output_2 = tf.nn.softmax(feature_output[:,:, 1], axis=1)
+	return tf.concat([output_1, output_2], 1), feature_output
+
 
 def fc_net(input_1, output_dim, keep_prob, is_training):
 	with tf.variable_scope('first_fc'):

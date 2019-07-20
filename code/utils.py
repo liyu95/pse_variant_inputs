@@ -11,7 +11,7 @@ from tf_utils import get_available_gpus
 from sklearn.model_selection import train_test_split
 from multiprocessing import Pool
 from sklearn import preprocessing
-
+import pdb
 
 def print_parameters():
 	print('='*40)
@@ -93,9 +93,19 @@ def run_in_batch_avg(session, tensors, batch_placeholders, feed_dict={}, batch_s
 			batch_tensor = tensor[ batch_idx*batch_size : (batch_idx+1)*batch_size ]                                         
 			current_batch_size = len(batch_tensor)                                                                           
 			feed_dict[placeholder] = tensor[ batch_idx*batch_size : (batch_idx+1)*batch_size ]                               
+		# pdb.set_trace()
 		tmp = session.run(tensors, feed_dict=feed_dict)                                                                    
 		res = [ r + t * current_batch_size for (r, t) in zip(res, tmp) ]                                                   
 	return [ r / float(total_size) for r in res ]
+
+
+
+def create_padding_mask(seq):
+    seq = np.equal(seq, 0).astype(int)
+
+    # add extra dimensions so that we can add the padding
+    # to the attention logits.
+    return seq[:, np.newaxis, np.newaxis, :]  # (batch_size, 1, 1, seq_len)
 
 
 def load_data_eagle():
@@ -138,10 +148,10 @@ def load_data_eagle_for_attention():
 	testX_to_pad = np.tile(testX_to_pad, (1,14)).reshape([-1, 14, 2])
 	testX = np.concatenate([testX_temp, testX_to_pad], axis=-1)
 
-	Y = Y.reshape([-1, 2, 14])
-	Y = np.swapaxes(Y, 1, 2)
-	testY = testY.reshape([-1, 2, 14])
-	testY = np.swapaxes(testY, 1, 2)
+	# Y = Y.reshape([-1, 2, 14])
+	# Y = np.swapaxes(Y, 1, 2)
+	# testY = testY.reshape([-1, 2, 14])
+	# testY = np.swapaxes(testY, 1, 2)
 
 	
 	if less2more:

@@ -132,8 +132,8 @@ class EncoderLayer(tf.keras.layers.Layer):
 		self.mha = MultiHeadAttention(d_model, num_heads)
 		self.ffn = point_wise_feed_forward_network(d_model, dff)
 
-		self.layernorm1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
-		self.layernorm2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+		# self.layernorm1 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
+		# self.layernorm2 = tf.keras.layers.LayerNormalization(epsilon=1e-6)
 
 		self.dropout1 = tf.keras.layers.Dropout(rate)
 		self.dropout2 = tf.keras.layers.Dropout(rate)
@@ -142,11 +142,13 @@ class EncoderLayer(tf.keras.layers.Layer):
 
 		attn_output, _ = self.mha(x, x, x, mask)  # (batch_size, input_seq_len, d_model)
 		attn_output = self.dropout1(attn_output, training=training)
-		out1 = self.layernorm1(x + attn_output)  # (batch_size, input_seq_len, d_model)
+		# out1 = self.layernorm1(x + attn_output)  # (batch_size, input_seq_len, d_model)
+		out1 = x + attn_output
 
 		ffn_output = self.ffn(out1)  # (batch_size, input_seq_len, d_model)
 		ffn_output = self.dropout2(ffn_output, training=training)
-		out2 = self.layernorm2(out1 + ffn_output)  # (batch_size, input_seq_len, d_model)
+		# out2 = self.layernorm2(out1 + ffn_output)  # (batch_size, input_seq_len, d_model)
+		out2  = out1 + ffn_output
 
 		return out2
 
@@ -158,7 +160,7 @@ class Encoder(tf.keras.layers.Layer):
 		self.d_model = d_model
 		self.num_layers = num_layers
 
-		self.embedding = tf.keras.layers.Embedding(maxlen, d_model)
+		self.embedding = tf.keras.layers.Dense(d_model, activation='relu')
 		self.pos_encoding = positional_encoding(maxlen, self.d_model)
 
 
@@ -166,7 +168,7 @@ class Encoder(tf.keras.layers.Layer):
 		                   for _ in range(num_layers)]
 
 		self.dropout = tf.keras.layers.Dropout(rate)
-		self.conv1d = tf.keras.layers.Conv1D(filters=3, kernel_size=1)
+		self.conv1d = tf.keras.layers.Conv1D(filters=2, kernel_size=1)
 
 	def call(self, x, training, mask):
 
@@ -183,7 +185,7 @@ class Encoder(tf.keras.layers.Layer):
 		# we can add one 1D conv with the filter size as 1 to translate the 
 		# last output into the final prediction.
 		x = self.conv1d(x)
-		return x  # (batch_size, input_seq_len, d_model)
+		return x  # (batch_size, input_seq_len, 2)
 
 
 

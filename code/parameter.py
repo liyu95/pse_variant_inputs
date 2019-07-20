@@ -24,7 +24,7 @@ output_step: The frequency of output the training acc
 	on the screen
 '''
 # run_id = args.id
-run_id = 'fc_8_to_14'
+run_id = 'fc_14_to_8'
 run_dir = run_id + '/'
 output_step = 10
 
