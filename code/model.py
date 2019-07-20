@@ -42,27 +42,19 @@ def fc_net(input_1, output_dim, keep_prob, is_training):
 
 def simple_conv(inputs):
 	layer1_out = tf.layers.conv1d(inputs=inputs,
-	    filters=8, kernel_size=10,
+	    filters=32, kernel_size=14,
 	    padding='same', data_format='channels_last',
 	    activation=tf.nn.relu, name='layer1')
 	layer2_out = tf.layers.conv1d(inputs=layer1_out,
-	    filters=32, kernel_size=10,
+	    filters=32, kernel_size=14,
 	    padding='same', data_format='channels_last',
 	    activation=tf.nn.relu, name='layer2')
 	layer3_out = tf.layers.conv1d(inputs=layer2_out,
-	    filters=32, kernel_size=10,
+	    filters=2, kernel_size=14,
 	    padding='same', data_format='channels_last',
-	    activation=tf.nn.relu, name='layer3')
-	layer4_out = tf.layers.conv1d(inputs=layer3_out,
-	    filters=8, kernel_size=10,
-	    padding='same', data_format='channels_last',
-	    activation=tf.nn.relu, name='layer4')
-	layer5_out = tf.layers.conv1d(inputs=layer4_out,
-	    filters=2, kernel_size=10,
-	    padding='same', data_format='channels_last',
-	    activation=None, name='layer5')
-	output_1 = tf.nn.softmax(layer5_out[:,:, 0], axis=1)
-	output_2 = tf.nn.softmax(layer5_out[:,:, 1], axis=1)
+	    activation=None, name='layer3')
+	output_1 = tf.nn.softmax(layer3_out[:,:, 0], axis=1)
+	output_2 = tf.nn.softmax(layer3_out[:,:, 1], axis=1)
 	return tf.concat([output_1, output_2], 1), layer5_out
 
 
